@@ -1,39 +1,4 @@
-//your JS code here.
-// User answers will be stored in this object
-let userAnswers = {};
-
-// Load user answers from session storage if available
-const storedAnswers = sessionStorage.getItem("userAnswers");
-if (storedAnswers) {
-  userAnswers = JSON.parse(storedAnswers);
-}
-// Function to calculate and display the user's score
-function submitQuiz() {
-  let score = 0;
-
-  for (let i = 0; i < questions.length; i++) {
-    const question = questions[i];
-    const userAnswer = userAnswers[`question-${i}`];
-    if (userAnswer === question.answer) {
-      score++;
-    }
-  }
-
-  document.getElementById("score").innerText = `Your score is ${score} out of ${questions.length}.`;
-
-  // Save the score to local storage
-  localStorage.setItem("score", score);
-}
-
-// Load the questions when the page loads
-document.addEventListener("DOMContentLoaded", () => {
-  renderQuestions();
-
-  // Add click event listener to the submit button
-  document.getElementById("submit").addEventListener("click", submitQuiz);
-});
-// Do not change code below this line
-// This code will just display the questions to the screen
+// Questions data
 const questions = [
   {
     question: "What is the capital of France?",
@@ -61,6 +26,15 @@ const questions = [
     answer: "Ottawa",
   },
 ];
+
+// User answers will be stored in this object
+let userAnswers = {};
+
+// Load user answers from session storage if available
+const storedAnswers = sessionStorage.getItem("userAnswers");
+if (storedAnswers) {
+  userAnswers = JSON.parse(storedAnswers);
+}
 
 // Display the quiz questions and choices
 function renderQuestions() {
@@ -100,4 +74,29 @@ function renderQuestions() {
     questionsElement.appendChild(questionElement);
   }
 }
-renderQuestions();
+
+// Function to calculate and display the user's score
+function submitQuiz() {
+  let score = 0;
+
+  for (let i = 0; i < questions.length; i++) {
+    const question = questions[i];
+    const userAnswer = userAnswers[`question-${i}`];
+    if (userAnswer === question.answer) {
+      score++;
+    }
+  }
+
+  document.getElementById("score").innerText = `Your score is ${score} out of ${questions.length}.`;
+
+  // Save the score to local storage
+  localStorage.setItem("score", score);
+}
+
+// Load the questions when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+  renderQuestions();
+
+  // Add click event listener to the submit button
+  document.getElementById("submit").addEventListener("click", submitQuiz);
+});
